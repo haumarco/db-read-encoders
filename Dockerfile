@@ -61,4 +61,4 @@ LABEL org.duckietown.label.base.image "${BASE_IMAGE}:${BASE_TAG}"
 # <==================================================
 
 # maintainer
-LABEL maintainer="<YOUR_FULL_NAME> (<YOUR_EMAIL_ADDRESS>)"
+LABEL maintainer="Mech-4640-TA (mech4640@mail.com)"
