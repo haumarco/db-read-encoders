@@ -1,0 +1,17 @@
+<package>
+  <name>read_encoders</name>
+  <version>0.1.0</version>
+  <description>
+  This package is a test for RH3.
+  </description>
+  <maintainer email="chris.bayley@dal.ca">Chris Bayley</maintainer>
+  <license>None</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <!-- This was recommended by http://wiki.ros.org/ROS/Tutorials/CreatingMsgAndSrv -->
+  <build_depend>message_generation</build_depend>
+  <!-- <exec_depend>message_runtime</exec_depend> -->
+  <!-- <run_depend>message_generation</run_depend> -->
+  <run_depend>message_runtime</run_depend>
+</package>

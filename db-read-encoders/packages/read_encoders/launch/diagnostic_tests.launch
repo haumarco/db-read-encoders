@@ -1,0 +1,11 @@
+<launch>
+
+
+  <!-- Launch the **FAKE** encoder node to publish in the encoder ticks message format-->
+  <node pkg="read_encoders" type="fake_encoder_ticks_node.py" name="fake_encoder_ticks_node" output="screen" />
+  
+  <!-- Launches the subscriber node so you can see how many encoder ticks are appearing.-->
+  <node pkg="read_encoders" type="encoder_ticks_subscriber_node.py" name="encoder_ticks_subscriber_node" output="screen" />
+
+
+</launch>
