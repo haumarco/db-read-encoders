@@ -61,9 +61,4 @@ LABEL org.duckietown.label.base.image "${BASE_IMAGE}:${BASE_TAG}"
 # <==================================================
 
 # maintainer
-<<<<<<< HEAD
 LABEL maintainer="Mech 4640 TA (mech4640@mail.com)"
-
-=======
-LABEL maintainer="Mech 4640 TA (mech4640@mail.com)"
->>>>>>> 217e286ae457b0237d3d305f0d3bc088a74cda76
