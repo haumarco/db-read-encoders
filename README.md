@@ -5,8 +5,8 @@ Documentation for the Duckietown project can be found [here](https://docs.duckie
 
 ---
 ## Note!
-The encoder_ticks node in this package has been designed to work in conjunction with the [db-cmd-vels](https://github.com/mech-4640/db-read-encoders) node, but does not need the db-cmd-vels node running in order to function. 
-**_If_** using the encoder_control node from the db-cmd-vels ROS package, 
+The encoder_ticks node in this package has been designed to work in conjunction with the [db-cmd-vels](https://github.com/mech-4640/db-cmd-vels) node, but does not need the db-cmd-vels node running in order to function. 
+**When** using the encoder_control node from the db-cmd-vels ROS package, 
 this encoder_ticks node **must** be running first.
 
 
