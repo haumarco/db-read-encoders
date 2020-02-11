@@ -58,14 +58,17 @@ class MyNode(DTROS):
 
 
     def run(self):
-        # publish message every 1 second
-        rate = rospy.Rate(1000) # Hz
+
+	rospy.loginfo("Encoder ticks node has reached the main run function")
+
+        # publish messages corresponding the frequency
+        rate = rospy.Rate(5) # Hz - User can adjust this.
 	# self.msg = encoderTicksStamped() # Defined in __init__
 
 	# Establish timing for reporting rospy.loginfo updates
-        now = rospy.get_rostime()
-        secs = now.secs
-        wait_time = 1
+        #now = rospy.get_rostime()
+        #secs = now.secs
+        #wait_time = 1
 
         global cb1
         global cb2
