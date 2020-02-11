@@ -31,7 +31,7 @@ sudo pigpiod
 
 
 ## Use ROSlaunch to run the encoder file
-roslaunch read_encoders encoder.launch
+roslaunch read_encoders encoder.launch veh:=$VEHICLE_NAME
 
 # This launches the encoder and its subscriber node
 # The subscriber node acts as a diagnostic test to check that the encoders are publishing correctly.

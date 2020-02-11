@@ -39,17 +39,22 @@ class MyNode(DTROS):
 	cb1 = self.pi.callback(self.left_motor_pin, pigpio.RISING_EDGE, self.cbPublish())
 	cb2 = self.pi.callback(self.right_motor_pin, pigpio.RISING_EDGE, self.cbPublish())
 
+	rospy.loginfo("%s has finished initializing!" % node_name)
 
     def cbPublish(self):
 	# Publishes both sets of encoder ticks whenver a tick is registered
 	global cb1
 	global cb2
 
+	# Form the message
 	self.msg.header.stamp = rospy.get_rostime()
 	self.msg.left_ticks = cb1.tally()
 	self.msg.right_ticks = cb2.tally()
+	
+	# Publish the message
 	self.pub.publish(self.msg)
-	rospy.loginfo("Published %d %d" % (self.msg.left_ticks, self.msg.right_ticks))
+	
+	#rospy.loginfo("Published %d %d" % (self.msg.left_ticks, self.msg.right_ticks)) # Diagnostic
 
 
     def run(self):
