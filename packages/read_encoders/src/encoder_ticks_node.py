@@ -11,8 +11,8 @@ import pigpio
 # Global
 #pi = 3.14
 pi = pigpio.pi()
-cb1 = pi.callback(18, pigpio.RISING_EDGE)
-cb2 = pi.callback(19, pigpio.RISING_EDGE)
+cb_left = pi.callback(18, pigpio.RISING_EDGE)
+cb_right = pi.callback(19, pigpio.RISING_EDGE)
 
 
 class MyNode(DTROS):
@@ -34,32 +34,32 @@ class MyNode(DTROS):
 	self.right_motor_pin = 19
 
 	# Setup the callbacks for each io pin
-	global cb1
-	global cb2
-	cb1 = self.pi.callback(self.left_motor_pin, pigpio.RISING_EDGE, self.cbPublish())
-	cb2 = self.pi.callback(self.right_motor_pin, pigpio.RISING_EDGE, self.cbPublish())
+	global cb_left
+	global cb_right
+	cb_left = self.pi.callback(self.left_motor_pin, pigpio.RISING_EDGE, self.cbPublish())
+	cb_right = self.pi.callback(self.right_motor_pin, pigpio.RISING_EDGE, self.cbPublish())
 
 	rospy.loginfo("%s has finished initializing!" % node_name)
 
     def cbPublish(self):
 	# Publishes both sets of encoder ticks whenver a tick is registered
-	global cb1
-	global cb2
+	global cb_left
+	global cb_right
 
 	# Form the message
 	self.msg.header.stamp = rospy.get_rostime()
-	self.msg.left_ticks = cb1.tally()
-	self.msg.right_ticks = cb2.tally()
+	self.msg.left_ticks = cb_left.tally()
+	self.msg.right_ticks = cb_right.tally()
 	
 	# Publish the message
 	self.pub.publish(self.msg)
 	
-	#rospy.loginfo("Published %d %d" % (self.msg.left_ticks, self.msg.right_ticks)) # Diagnostic
+	rospy.loginfo("Published %d %d" % (self.msg.left_ticks, self.msg.right_ticks)) # Diagnostic - comment this out to reduce CPU usage.
 
 
     def run(self):
 
-	rospy.loginfo("Encoder ticks node has reached the main run function")
+	rospy.loginfo("Encoder ticks node has reached the main run function and is running")
 
         # publish messages corresponding the frequency
         rate = rospy.Rate(5) # Hz - User can adjust this.
@@ -70,15 +70,15 @@ class MyNode(DTROS):
         #secs = now.secs
         #wait_time = 1
 
-        global cb1
-        global cb2
-	self.lastcb1 = cb1.tally()
-	self.lastcb2 = cb2.tally()
+        global cb_left
+        global cb_right
+	self.lastcb_left = cb_left.tally()
+	self.lastcb_right = cb_right.tally()
 
 
         while not rospy.is_shutdown():
-            if ((cb1.tally() != self.lastcb1) or (cb2.tally() != self.lastcb2)):
-                self.lastcb1 = cb1.tally(); self.lastcb2 = cb2.tally()
+            if ((cb_left.tally() != self.lastcb_left) or (cb_right.tally() != self.lastcb_right)):
+                self.lastcb_left = cb_left.tally(); self.lastcb_right = cb_right.tally()
                 self.pi.callback(self.left_motor_pin,  pigpio.RISING_EDGE, self.cbPublish())
 
 
