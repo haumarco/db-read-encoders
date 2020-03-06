@@ -69,15 +69,19 @@ class MyNode(DTROS):
 		global cb_right
 
 		# Form the message
-		# Difference of ticks since the last published value
 		self.msg.header.stamp = rospy.get_rostime()
-		self.msg.left_ticks = (cb_left.tally() - self.lastcb_left) * np.sign(self.wheel_dir_left)
-		self.msg.right_ticks = (cb_right.tally() - self.lastcb_right) * np.sign(self.wheel_dir_right)
+		# Difference of ticks since the last published value
+		#self.msg.left_ticks = (cb_left.tally() - self.lastcb_left) * np.sign(self.wheel_dir_left)
+		#self.msg.right_ticks = (cb_right.tally() - self.lastcb_right) * np.sign(self.wheel_dir_right)
+
+		# Ticks in total + forwards, - backwards
+		self.msg.left_ticks += (cb_left.tally() - self.lastcb_left) * np.sign(self.wheel_dir_left)
+		self.msg.right_ticks += (cb_right.tally() - self.lastcb_right) * np.sign(self.wheel_dir_right)
 
 		# Publish the message
 		self.pub.publish(self.msg)
 
-		rospy.loginfo("Published %s %s" % (self.msg.left_ticks, self.msg.right_ticks)) # Diagnostic - comment this out to reduce CPU usage.
+		rospy.loginfo("Published %d %d" % (self.msg.left_ticks, self.msg.right_ticks)) # Diagnostic - comment this out to reduce CPU usage.
 
 
 	def run(self):
@@ -85,7 +89,7 @@ class MyNode(DTROS):
 		rospy.loginfo("Encoder ticks node has reached the main run function and is running")
 
 		# publish messagehttps://www.google.com/search?q=import+numpy&client=ubuntu&hs=1eq&channel=fs&tbm=isch&source=iu&ictx=1&fir=-FcoxcAhv5quKM%253A%252CseZ5QRd8Ko_0VM%252C_&vet=1&usg=AI4_-kS67HWs6cydc2cyF9iDnInV6H8gZA&sa=X&ved=2ahUKEwj0iMOYioPoAhWmyqYKHRCHCNQQ9QEwAHoECAQQAw#imgrc=-FcoxcAhv5quKM:s corresponding the frequency
-		rate = rospy.Rate(5) # Hz - User can adjust this.
+		rate = rospy.Rate(20) # Hz - User can adjust this.
 		# self.msg = encoderTicksStamped() # Defined in __init__
 
 		# Establish timing for reporting rospy.loginfo updates
