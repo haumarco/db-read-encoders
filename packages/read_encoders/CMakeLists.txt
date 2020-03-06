@@ -3,6 +3,8 @@ project(read_encoders)
 
 find_package(catkin REQUIRED COMPONENTS
   rospy
+  #marco
+  duckietown_msgs # Every duckietown packages should use this.
 
 # Only the encoder_ticks_node needs these
   std_msgs

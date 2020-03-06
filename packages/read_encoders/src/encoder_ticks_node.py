@@ -58,9 +58,9 @@ class MyNode(DTROS):
 	# updates wheel direction of each wheel
 	def update_wheel_direction(self, msg_wheel_dir):
 		if (msg_wheel_dir.vel_left != 0):
-			self.wheel_dir_left = np.sign(self.wheel_dir_left)
+			self.wheel_dir_left = msg_wheel_dir.vel_left
 		if (msg_wheel_dir.vel_right != 0):
-			self.wheel_dir_right = np.sign(self.wheel_dir_right)
+			self.wheel_dir_right = msg_wheel_dir.vel_right
 
 
 	def cbPublish(self):
@@ -71,13 +71,13 @@ class MyNode(DTROS):
 		# Form the message
 		# Difference of ticks since the last published value
 		self.msg.header.stamp = rospy.get_rostime()
-		self.msg.left_ticks = (cb_left.tally() - self.lastcb_left) * self.wheel_dir_left
-		self.msg.right_ticks = (cb_right.tally() - self.lastcb_right) * self.wheel_dir_right
+		self.msg.left_ticks = (cb_left.tally() - self.lastcb_left) * np.sign(self.wheel_dir_left)
+		self.msg.right_ticks = (cb_right.tally() - self.lastcb_right) * np.sign(self.wheel_dir_right)
 
 		# Publish the message
 		self.pub.publish(self.msg)
 
-		rospy.loginfo("Published %d %d" % (self.msg.left_ticks, self.msg.right_ticks)) # Diagnostic - comment this out to reduce CPU usage.
+		rospy.loginfo("Published %s %s" % (self.msg.left_ticks, self.msg.right_ticks)) # Diagnostic - comment this out to reduce CPU usage.
 
 
 	def run(self):
