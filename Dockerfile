@@ -26,6 +26,20 @@ RUN apt-get update \
     $(awk -F: '/^[^#]/ { print $1 }' dependencies-apt.txt | uniq) \
   && rm -rf /var/lib/apt/lists/*
 
+
+###
+#added pigpio library setup here
+WORKDIR /home/software/pigpio
+RUN wget abyz.me.uk/rpi/pigpio/pigpio.tar \
+    && tar xf pigpio.tar \
+    && cd PIGPIO \
+    && make \
+    && make install
+
+WORKDIR "${REPO_PATH}"
+###
+
+
 # install python dependencies
 COPY ./dependencies-py.txt "${REPO_PATH}/"
 RUN pip install -r ${REPO_PATH}/dependencies-py.txt
