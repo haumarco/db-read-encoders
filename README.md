@@ -1,3 +1,5 @@
+
+This repo was forked from mech-4640/db-read-encoders. I changed a lot in the encoder_ticks_node.py file since there occured some bugs. I also changed the installation of the pigpio. The rest is more or less the same.
 # DB-Cmd-Vels
 This node reads encoder signals from the [Duckietown](https://www.duckietown.org/) Duckiebot using the [pigpio](https://github.com/joan2937/pigpio) library (v74).
 
